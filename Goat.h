@@ -26,6 +26,16 @@ public:
     string get_color() const        { return color; }
 
     // write overloaded < operator for the std::list
+    // Whoopsie! Forgot to do this originally
+
+    // operator<() compares this to another goat
+    // parameters: const Goat &other - the goat to compare to
+    // returns: bool - true if this is less than other
+    bool operator<(const Goat &other) const {
+        // The task never gives any explicit instructions on how to compare goats
+        // So I'm following how you did it in the videos, so just the names
+        return name < other.name; 
+    }
 };
 
 #endif
