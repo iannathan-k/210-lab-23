@@ -59,6 +59,9 @@ int main_menu() {
     return choice;
 }
 
+// add_goat() creates a new goat and pushes it to the back of the trip list
+// parameters: list<Goat> &trip - list to append to
+// returns: void
 void add_goat(list<Goat> &trip, string names[], string colors[]) {
     string name = names[rand() % SZ_NAMES];
     string color = colors[rand() % SZ_COLORS];
@@ -67,7 +70,38 @@ void add_goat(list<Goat> &trip, string names[], string colors[]) {
     trip.push_back(Goat(name, age, color));
 }
 
+// select_goat() displays the trip, prompts and validates user for a goat choice
+// parameters: list<Goat> trip - list to choose from
+// returns: int - index of the chosen goat
 int select_goat(list<Goat> trip) {
+    display_trip(trip); // Reuse display trip for efficiency
+    cout << "Choice --> ";
+
+    int choice;
+    cin >> choice;
+
+    while (choice < 1 || choice > trip.size()) { // User input is 1-based
+        cout << "Invalid choice, try again --> ";
+        cin >> choice;
+    }
+
+    return choice - 1; // Adjusted to 0 based index to work with lists
+}
+
+// delete_goat() removes goat from index inputted by user
+// parameters: list<Goat> &trip - list to delete from
+// returns: void
+void delete_goat(list<Goat> &trip) {
+    int index = select_goat(trip);
+    auto it = trip.begin();
+    advance(it, index);
+    trip.erase(it);
+}
+
+// display_trip() displays the goats on the trip list
+// parameters: list<Goat> trip - list to display
+// returns: void
+void display_trip(list<Goat> trip) {
     int i = 1; // Starting with 1 for human counting system
     for (Goat goat : trip) {
         cout << "[" << i << "] ";
@@ -76,20 +110,4 @@ int select_goat(list<Goat> trip) {
         cout << goat.get_color() << ")" << endl;
         i++;
     }
-    cout << "Choice --> ";
-
-    int choice;
-    cin >> choice;
-
-    while (choice < 1 || choice > trip.size()) {
-        cout << "Invalid choice, try again --> ";
-        cin >> choice;
-    }
-
-    return choice - 1; // Adjusted to 0 based index to work with lists
-}
-
-void delete_goat(list<Goat> &trip) {
-    int index = select_goat(trip);
-    auto it = trip.begin();
 }
