@@ -78,9 +78,10 @@ int main_menu() {
 // parameters: list<Goat> &trip - list to append to
 // returns: void
 void add_goat(list<Goat> &trip, string names[], string colors[]) {
-    string name = names[rand() % SZ_NAMES];
+    string name = names[rand() % SZ_NAMES]; // Select random name and color
     string color = colors[rand() % SZ_COLORS];
-    int age = rand() % MAX_AGE;
+    int age = rand() % (MAX_AGE + 1); // Random age between 0 and MAX_AGE inclusive
+    // As modulo MAX_AGE would only give you 0 to MAX_AGE - 1
 
     trip.push_back(Goat(name, age, color));
 }
