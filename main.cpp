@@ -8,6 +8,7 @@ using namespace std;
 // COMSC-210 | Lab 23 | Ian Kusmiantoro
 
 const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
+const int ADD = 1, DELETE = 2, LIST = 3, QUIT = 4;
 
 int select_goat(list<Goat> trip);
 void delete_goat(list<Goat> &trip);
@@ -31,8 +32,22 @@ int main() {
     while (fin1 >> colors[i++]);
     fin1.close();
 
+    list<Goat> trip; // the actual list
+    int choice = -1;
+    while (choice != QUIT) { // Loop till the user quits
+        choice = main_menu();
 
-
+        if (choice == ADD) {
+            add_goat(trip, names, colors);
+        }
+        else if (choice == DELETE) {
+            delete_goat(trip);
+        }
+        else if (choice == LIST) {
+            display_trip(trip);
+        }
+        cout << endl; // Just to fix formatting stuff
+    }
 
     return 0;
 }
@@ -74,6 +89,13 @@ void add_goat(list<Goat> &trip, string names[], string colors[]) {
 // parameters: list<Goat> trip - list to choose from
 // returns: int - index of the chosen goat
 int select_goat(list<Goat> trip) {
+    if (trip.empty()) { // Guard Clause
+        cout << "List is empty" << endl;
+        return -1; // -1 is just a dummy number to indicate an error
+        // But theoretically it'll never be accessed since the calling function
+        // delete_goat() already has its own guard clause
+    }
+
     display_trip(trip); // Reuse display trip for efficiency
     cout << "Choice --> ";
 
@@ -92,6 +114,11 @@ int select_goat(list<Goat> trip) {
 // parameters: list<Goat> &trip - list to delete from
 // returns: void
 void delete_goat(list<Goat> &trip) {
+    if (trip.empty()) {
+        cout << "List is empty" << endl;
+        return;
+    }
+
     int index = select_goat(trip);
     auto it = trip.begin();
     advance(it, index);
@@ -102,6 +129,11 @@ void delete_goat(list<Goat> &trip) {
 // parameters: list<Goat> trip - list to display
 // returns: void
 void display_trip(list<Goat> trip) {
+    if (trip.empty()) {
+        cout << "List is empty" << endl;
+        return;
+    }
+
     int i = 1; // Starting with 1 for human counting system
     for (Goat goat : trip) {
         cout << "[" << i << "] ";
