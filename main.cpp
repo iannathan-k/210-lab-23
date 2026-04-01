@@ -38,6 +38,8 @@ int main() {
 }
 
 // main_menu() displays the menu, obtains, validates and returns the user's choice
+// parameters: none
+// returns: int - user's validated choice
 int main_menu() {
     cout << "*** GOAT MANAGER 3001 ***" << endl;
     cout << "[1] Add a goat" << endl;
@@ -55,4 +57,39 @@ int main_menu() {
     }
 
     return choice;
+}
+
+void add_goat(list<Goat> &trip, string names[], string colors[]) {
+    string name = names[rand() % SZ_NAMES];
+    string color = colors[rand() % SZ_COLORS];
+    int age = rand() % MAX_AGE;
+
+    trip.push_back(Goat(name, age, color));
+}
+
+int select_goat(list<Goat> trip) {
+    int i = 1; // Starting with 1 for human counting system
+    for (Goat goat : trip) {
+        cout << "[" << i << "] ";
+        cout << goat.get_name();
+        cout << " (" << goat.get_age() << ", ";
+        cout << goat.get_color() << ")" << endl;
+        i++;
+    }
+    cout << "Choice --> ";
+
+    int choice;
+    cin >> choice;
+
+    while (choice < 1 || choice > trip.size()) {
+        cout << "Invalid choice, try again --> ";
+        cin >> choice;
+    }
+
+    return choice - 1; // Adjusted to 0 based index to work with lists
+}
+
+void delete_goat(list<Goat> &trip) {
+    int index = select_goat(trip);
+    auto it = trip.begin();
 }
