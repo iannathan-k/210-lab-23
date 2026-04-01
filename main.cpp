@@ -5,6 +5,8 @@
 #include "Goat.h"
 using namespace std;
 
+// COMSC-210 | Lab 23 | Ian Kusmiantoro
+
 const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
 
 int select_goat(list<Goat> trip);
@@ -35,3 +37,22 @@ int main() {
     return 0;
 }
 
+// main_menu() displays the menu, obtains, validates and returns the user's choice
+int main_menu() {
+    cout << "*** GOAT MANAGER 3001 ***" << endl;
+    cout << "[1] Add a goat" << endl;
+    cout << "[2] Delete a goat" << endl;
+    cout << "[3] List goats" << endl;
+    cout << "[4] Quit" << endl;
+    cout << "Choice --> ";
+
+    int choice;
+    cin >> choice;
+
+    while (choice < 1 || choice > 4) {
+        cout << "Invalid choice, try again --> ";
+        cin >> choice;
+    }
+
+    return choice;
+}
